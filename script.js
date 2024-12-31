@@ -20,6 +20,7 @@ const wishElement = document.getElementById('wish');
 const musicToggle = document.getElementById('music-toggle');
 const restartButton = document.getElementById('restart');
 const confettiContainer = document.getElementById('confetti');
+const visitorCountElement = document.getElementById('visitor-count');
 const liveViewersElement = document.getElementById('live-viewers');
 
 const wishes = [
@@ -126,6 +127,24 @@ restartButton.addEventListener('click', () => {
     location.reload();
 });
 
+async function updateVisitorCount() {
+    const visitorDoc = doc(db, "stats", "visitorCount");
+    const visitorSnapshot = await getDoc(visitorDoc);
+
+    if (visitorSnapshot.exists()) {
+        await updateDoc(visitorDoc, {
+            count: increment(1)
+        });
+        const updatedSnapshot = await getDoc(visitorDoc);
+        visitorCountElement.textContent = updatedSnapshot.data().count;
+    } else {
+        await setDoc(visitorDoc, {
+            count: 20000
+        });
+        visitorCountElement.textContent = 20000;
+    }
+}
+
 function updateLiveViewers() {
     // Placeholder for live viewers count
     liveViewersElement.textContent = Math.floor(Math.random() * 9000) + 1135;
@@ -133,4 +152,5 @@ function updateLiveViewers() {
 
 const countdownInterval = setInterval(updateCountdown, 1000);
 updateCountdown();
+updateVisitorCount();
 updateLiveViewers();

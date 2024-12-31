@@ -159,6 +159,18 @@ button:active {
     font-size: 0.9em;
 }
 
+/* Visitors count styles */
+#visitors-count {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 0.9em;
+}
+
 /* Responsive design */
 @media (max-width: 600px) {
     #countdown {
